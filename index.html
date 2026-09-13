@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Wedding Counter</title>
+    <style>
+        body {
+            /* 🖼️ Background Image filename matching your GitHub upload */
+            background: url('siva.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #dfba6b;
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        /* Dark overlay blur to keep the text readable over your background photo */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(28, 10, 16, 0.75); 
+            z-index: 1;
+        }
+        .clock-container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            border: 2px solid #dfba6b;
+            padding: 50px 40px;
+            border-radius: 25px;
+            box-shadow: 0 0 35px rgba(223, 186, 107, 0.3);
+            background-color: rgba(45, 18, 27, 0.9); /* Semi-transparent maroon */
+            display: none; /* Hidden until password is correct */
+        }
+        h1 { font-size: 28px; margin-bottom: 5px; color: #ffffff; font-weight: normal; letter-spacing: 2px; }
+        .sub-title { font-size: 16px; color: #dfba6b; margin-bottom: 30px; font-style: italic; letter-spacing: 1px; }
+        #clock { font-size: 38px; font-weight: bold; color: #ffffff; border-top: 1px solid rgba(223, 186, 107, 0.3); padding-top: 20px; }
+    </style>
+</head>
+<body>
+
+<!-- 🎵 CLEAN BACKGROUND MUSIC AUDIO LINK (FIXED) -->
+<audio id="weddingMusic" loop>
+    <source src="https://audio.com/omoninja123/audio/golden-brown-mp3" type="audio/mp3">
+</audio>
+
+<div class="clock-container" id="mainClock">
+    <h1>💍 Happily Ever After 💍</h1>
+    <div class="sub-title">Time passed since July 17, 2026</div>
+    <div id="clock">Loading live clock...</div>
+</div>
+
+<script>
+    const SECRET_PASSWORD = "goldenbrown#12#11#17"; 
+
+    let userAccess = prompt("Please enter the secret password to view our wedding clock:");
+
+    if (userAccess === SECRET_PASSWORD) {
+        // Show Clock Container
+        document.getElementById("mainClock").style.display = "block";
+        
+        // Play Background Music automatically once authorized
+        const audio = document.getElementById("weddingMusic");
+        audio.play().catch(error => {
+            console.log("Autoplay blocked by browser. Click anywhere to play music.");
+            // Backup setup: Play music on first click if browser blocks autoplay
+            document.body.addEventListener('click', () => { audio.play(); }, { once: true });
+        });
+        
+        const startDate = new Date("2026-07-17T00:00:00").getTime();
+
+        function updateClock() {
+            const now = new Date().getTime();
+            const difference = now - startDate;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("clock").innerHTML = 
+                days + " Days | " + hours + " Hours | " + minutes + " Mins | " + seconds + " Secs";
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    } else {
+        alert("Incorrect password. Access denied.");
+        document.body.innerHTML = "<h2 style='color:#dfba6b; font-family: Georgia, serif; text-align:center; margin-top:20vh;'>Access Denied</h2>";
+    }
+</script>
+
+</body>
+</html>
