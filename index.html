@@ -336,8 +336,8 @@
             }
         }
 
-        /* MUSIC BUTTON */
-        #musicButton {
+        /* MUSIC CONTROLS */
+        #musicControls {
             position: fixed;
 
             bottom: 25px;
@@ -345,7 +345,12 @@
 
             z-index: 10;
 
-            padding: 12px 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .music-btn {
+            padding: 12px 18px;
 
             border: 1px solid #dfba6b;
             border-radius: 30px;
@@ -363,7 +368,7 @@
             transition: 0.3s;
         }
 
-        #musicButton:hover {
+        .music-btn:hover {
             background: rgba(223,186,107,0.15);
 
             box-shadow:
@@ -401,7 +406,7 @@
                 margin-top: 25px;
             }
 
-            #musicButton {
+            #musicControls {
                 bottom: 15px;
                 left: 15px;
             }
@@ -500,10 +505,12 @@
     </div>
 
 
-    <!-- 🎵 MUSIC CONTROL -->
-    <button id="musicButton">
-        🎵 Play Music
-    </button>
+    <!-- 🎵 MUSIC CONTROL BAR -->
+    <div id="musicControls">
+        <button id="prevButton" class="music-btn">⏮</button>
+        <button id="musicButton" class="music-btn">🎵 Play Music</button>
+        <button id="nextButton" class="music-btn">⏭</button>
+    </div>
 
 
     <script>
@@ -601,13 +608,25 @@
             setInterval(updateClock, 1000);
 
 
-            /* 🎵 MULTI-SONG PLAYLIST */
+            /* 🎵 MULTI-SONG PLAYLIST WITH CONTROLS */
             const audio =
                 document.getElementById("weddingMusic");
 
             const musicButton =
                 document.getElementById("musicButton");
 
+            const prevButton =
+                document.getElementById("prevButton");
+
+            const nextButton =
+                document.getElementById("nextButton");
+
+            /*
+             * Track order:
+             * 1. golden-brown.mp3.mp3 (Kannala Kannala)
+             * 2. Alaakaa-Loova.mp3
+             * 3. inayae.mp3
+             */
             const playlist = [
                 "golden-brown.mp3.mp3",
                 "Alaakaa-Loova.mp3",
@@ -621,36 +640,48 @@
                 audio.load();
             }
 
+            function playTrack() {
+                audio.play()
+                    .then(() => {
+                        musicButton.textContent = "⏸ Pause Music";
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+
             // Initial track load
             loadTrack(currentTrackIndex);
+
+            // Next Track Button
+            nextButton.addEventListener("click", () => {
+                currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+                loadTrack(currentTrackIndex);
+                playTrack();
+            });
+
+            // Previous Track Button
+            prevButton.addEventListener("click", () => {
+                currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+                loadTrack(currentTrackIndex);
+                playTrack();
+            });
 
             // Automatically play next song when current one finishes
             audio.addEventListener("ended", () => {
                 currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
                 loadTrack(currentTrackIndex);
-                audio.play();
+                playTrack();
             });
 
             // Toggle Play/Pause button
             musicButton.addEventListener("click", () => {
 
                 if (audio.paused) {
-
-                    audio.play()
-                        .then(() => {
-                            musicButton.textContent =
-                                "⏸ Pause Music";
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
-
+                    playTrack();
                 } else {
-
                     audio.pause();
-
-                    musicButton.textContent =
-                        "🎵 Play Music";
+                    musicButton.textContent = "🎵 Play Music";
                 }
 
             });
