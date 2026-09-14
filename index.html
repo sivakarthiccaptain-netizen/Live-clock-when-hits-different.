@@ -193,23 +193,42 @@
             }
         }
 
-        /* CLOCK */
-        #clock {
+        /* CORNER COUNTERS (Split across screen) */
+        .corner-counter {
+            position: fixed;
+            top: 25px;
+            z-index: 10;
             display: flex;
-            justify-content: center;
             gap: 15px;
 
-            margin-top: 30px;
+            background: rgba(35, 8, 18, 0.72);
+            padding: 15px 20px;
+            border: 1px solid rgba(223, 186, 107, 0.8);
+            border-radius: 18px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            box-shadow: 0 0 20px rgba(223, 186, 107, 0.2);
+            display: none; /* Shown via JavaScript password verification */
+        }
+
+        #cornerLeft {
+            left: 25px;
+        }
+
+        #cornerRight {
+            right: 25px;
         }
 
         .time-box {
-            min-width: 130px;
+            min-width: 90px;
 
-            padding: 20px 10px;
+            padding: 10px 15px;
 
             border-left: 1px solid rgba(223,186,107,0.4);
 
             background: rgba(255,255,255,0.025);
+            text-align: center;
         }
 
         .time-box:first-child {
@@ -221,7 +240,7 @@
 
             color: white;
 
-            font-size: clamp(28px, 5vw, 48px);
+            font-size: clamp(24px, 4vw, 36px);
 
             font-weight: bold;
 
@@ -232,11 +251,11 @@
         .label {
             display: block;
 
-            margin-top: 7px;
+            margin-top: 5px;
 
             color: #dfba6b;
 
-            font-size: 14px;
+            font-size: 12px;
 
             font-style: italic;
             letter-spacing: 2px;
@@ -382,24 +401,31 @@
                 padding: 35px 15px;
             }
 
-            #clock {
-                display: grid;
-
-                grid-template-columns: repeat(2, 1fr);
-
+            .corner-counter {
+                top: 15px;
+                padding: 8px 10px;
                 gap: 5px;
             }
 
+            #cornerLeft {
+                left: 10px;
+            }
+
+            #cornerRight {
+                right: 10px;
+            }
+
             .time-box {
-                border-left: none;
+                min-width: 60px;
+                padding: 5px;
             }
 
             .number {
-                font-size: 30px;
+                font-size: 20px;
             }
 
             .label {
-                font-size: 11px;
+                font-size: 10px;
             }
 
             .message {
@@ -443,7 +469,32 @@
     <div class="sparkle" style="left:84%; animation-delay:3s;">✦</div>
 
 
-    <!-- 💍 MAIN CLOCK -->
+    <!--  TOP LEFT COUNTER (Days & Hours) -->
+    <div class="corner-counter" id="cornerLeft">
+        <div class="time-box">
+            <span class="number" id="days">0</span>
+            <span class="label">Days</span>
+        </div>
+        <div class="time-box">
+            <span class="number" id="hours">0</span>
+            <span class="label">Hours</span>
+        </div>
+    </div>
+
+    <!-- TOP RIGHT COUNTER (Minutes & Seconds) -->
+    <div class="corner-counter" id="cornerRight">
+        <div class="time-box">
+            <span class="number" id="minutes">0</span>
+            <span class="label">Minutes</span>
+        </div>
+        <div class="time-box">
+            <span class="number" id="seconds">0</span>
+            <span class="label">Seconds</span>
+        </div>
+    </div>
+
+
+    <!-- 💍 MAIN CARD -->
     <div class="clock-container" id="mainClock">
 
         <div class="decoration">
@@ -463,40 +514,6 @@
             <div class="heart">♡</div>
             <span></span>
         </div>
-
-
-        <!-- LIVE COUNTER -->
-        <div id="clock">
-
-            <div class="time-box">
-                <span class="number" id="days">0</span>
-                <span class="label">Days</span>
-            </div>
-
-            <div class="time-box">
-                <span class="number" id="hours">0</span>
-                <span class="label">Hours</span>
-            </div>
-
-            <div class="time-box">
-                <span class="number" id="minutes">0</span>
-                <span class="label">Minutes</span>
-            </div>
-
-            <div class="time-box">
-                <span class="number" id="seconds">0</span>
-                <span class="label">Seconds</span>
-            </div>
-
-        </div>
-
-
-        <div class="divider">
-            <span></span>
-            <div class="heart">♥</div>
-            <span></span>
-        </div>
-
 
         <div class="message">
             Every second counts... ✨
@@ -527,8 +544,10 @@
 
         if (userAccess === SECRET_PASSWORD) {
 
-            /* SHOW CLOCK */
+            /* SHOW CLOCK AND CORNER COUNTERS */
             document.getElementById("mainClock").style.display = "block";
+            document.getElementById("cornerLeft").style.display = "flex";
+            document.getElementById("cornerRight").style.display = "flex";
 
 
             /*
@@ -732,3 +751,4 @@
 
     </script>
 </body>
+</html>
