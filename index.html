@@ -26,7 +26,8 @@
             font-family: Georgia, serif;
 
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-end;
             align-items: center;
 
             position: relative;
@@ -41,8 +42,8 @@
             background:
                 radial-gradient(
                     circle at center,
-                    rgba(80, 20, 35, 0.25),
-                    rgba(10, 3, 7, 0.82)
+                    rgba(80, 20, 35, 0.15),
+                    rgba(10, 3, 7, 0.6)
                 );
 
             z-index: 1;
@@ -62,138 +63,7 @@
             pointer-events: none;
         }
 
-        /* MAIN CARD */
-        .clock-container {
-            position: relative;
-            z-index: 5;
-
-            width: min(900px, 90%);
-
-            padding: 50px 45px;
-
-            text-align: center;
-
-            border: 1px solid rgba(223, 186, 107, 0.9);
-            border-radius: 28px;
-
-            background: rgba(35, 8, 18, 0.72);
-
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-
-            box-shadow:
-                0 0 20px rgba(223, 186, 107, 0.15),
-                0 0 60px rgba(223, 186, 107, 0.12),
-                inset 0 0 30px rgba(223, 186, 107, 0.05);
-
-            animation: cardGlow 4s ease-in-out infinite alternate;
-
-            display: none;
-        }
-
-        @keyframes cardGlow {
-            from {
-                box-shadow:
-                    0 0 20px rgba(223, 186, 107, 0.15),
-                    0 0 60px rgba(223, 186, 107, 0.08);
-            }
-
-            to {
-                box-shadow:
-                    0 0 30px rgba(223, 186, 107, 0.3),
-                    0 0 80px rgba(223, 186, 107, 0.15);
-            }
-        }
-
-        /* TOP DECORATION */
-        .decoration {
-            font-size: 28px;
-            color: #dfba6b;
-            letter-spacing: 12px;
-            margin-bottom: 15px;
-
-            animation: floatingHeart 3s ease-in-out infinite;
-        }
-
-        @keyframes floatingHeart {
-            0%, 100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-5px);
-            }
-        }
-
-        /* TITLE */
-        h1 {
-            margin: 0;
-
-            font-size: clamp(27px, 5vw, 48px);
-
-            font-weight: normal;
-            letter-spacing: 3px;
-
-            color: white;
-
-            text-shadow:
-                0 0 10px rgba(255,255,255,0.2),
-                0 0 25px rgba(223,186,107,0.25);
-        }
-
-        /* SUBTITLE */
-        .sub-title {
-            margin-top: 15px;
-            margin-bottom: 35px;
-
-            font-size: clamp(14px, 2vw, 18px);
-
-            color: #dfba6b;
-
-            font-style: italic;
-            letter-spacing: 2px;
-        }
-
-        /* GOLD DIVIDER */
-        .divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            gap: 15px;
-
-            margin: 25px 0;
-        }
-
-        .divider span {
-            height: 1px;
-
-            width: 120px;
-
-            background: linear-gradient(
-                to right,
-                transparent,
-                #dfba6b,
-                transparent
-            );
-        }
-
-        .divider .heart {
-            font-size: 20px;
-            animation: heartPulse 1.8s infinite;
-        }
-
-        @keyframes heartPulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.25);
-            }
-        }
-
-        /* CORNER COUNTERS (Split across screen) */
+        /* CORNER COUNTERS (Split across top screen) */
         .corner-counter {
             position: fixed;
             top: 25px;
@@ -261,13 +131,78 @@
             letter-spacing: 2px;
         }
 
+        /* BOTTOM CONTAINER FOR TEXT AND MUSIC */
+        .bottom-container {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 20px 30px;
+            background: rgba(25, 5, 12, 0.65);
+            border: 1px solid rgba(223, 186, 107, 0.5);
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            max-width: 90%;
+        }
+
+        /* TOP DECORATION */
+        .decoration {
+            font-size: 20px;
+            color: #dfba6b;
+            letter-spacing: 8px;
+            margin-bottom: 8px;
+
+            animation: floatingHeart 3s ease-in-out infinite;
+        }
+
+        @keyframes floatingHeart {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* TITLE */
+        h1 {
+            margin: 0;
+
+            font-size: clamp(20px, 3.5vw, 32px);
+
+            font-weight: normal;
+            letter-spacing: 2px;
+
+            color: white;
+
+            text-shadow:
+                0 0 10px rgba(255,255,255,0.2),
+                0 0 25px rgba(223,186,107,0.25);
+        }
+
+        /* SUBTITLE */
+        .sub-title {
+            margin-top: 8px;
+            margin-bottom: 12px;
+
+            font-size: clamp(12px, 1.8vw, 15px);
+
+            color: #dfba6b;
+
+            font-style: italic;
+            letter-spacing: 1.5px;
+        }
+
         /* BOTTOM MESSAGE */
         .message {
-            margin-top: 35px;
+            margin-top: 10px;
 
             color: #e9c982;
 
-            font-size: clamp(16px, 2.5vw, 22px);
+            font-size: clamp(14px, 2vw, 18px);
 
             font-style: italic;
 
@@ -275,6 +210,40 @@
 
             text-shadow:
                 0 0 10px rgba(223,186,107,0.3);
+        }
+
+        /* MUSIC CONTROLS */
+        #musicControls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .music-btn {
+            padding: 10px 16px;
+
+            border: 1px solid #dfba6b;
+            border-radius: 30px;
+
+            background: rgba(25, 5, 12, 0.75);
+
+            color: #dfba6b;
+
+            font-family: Georgia, serif;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(8px);
+
+            transition: 0.3s;
+        }
+
+        .music-btn:hover {
+            background: rgba(223,186,107,0.15);
+
+            box-shadow:
+                0 0 20px rgba(223,186,107,0.25);
         }
 
         /* FALLING PETALS */
@@ -355,51 +324,8 @@
             }
         }
 
-        /* MUSIC CONTROLS */
-        #musicControls {
-            position: fixed;
-
-            bottom: 25px;
-            left: 25px;
-
-            z-index: 10;
-
-            display: flex;
-            gap: 10px;
-        }
-
-        .music-btn {
-            padding: 12px 18px;
-
-            border: 1px solid #dfba6b;
-            border-radius: 30px;
-
-            background: rgba(25, 5, 12, 0.75);
-
-            color: #dfba6b;
-
-            font-family: Georgia, serif;
-
-            cursor: pointer;
-
-            backdrop-filter: blur(8px);
-
-            transition: 0.3s;
-        }
-
-        .music-btn:hover {
-            background: rgba(223,186,107,0.15);
-
-            box-shadow:
-                0 0 20px rgba(223,186,107,0.25);
-        }
-
         /* MOBILE */
         @media (max-width: 650px) {
-
-            .clock-container {
-                padding: 35px 15px;
-            }
 
             .corner-counter {
                 top: 15px;
@@ -428,13 +354,9 @@
                 font-size: 10px;
             }
 
-            .message {
-                margin-top: 25px;
-            }
-
-            #musicControls {
-                bottom: 15px;
-                left: 15px;
+            .bottom-container {
+                margin-bottom: 15px;
+                padding: 15px 15px;
             }
         }
     </style>
@@ -469,7 +391,7 @@
     <div class="sparkle" style="left:84%; animation-delay:3s;">✦</div>
 
 
-    <!--  TOP LEFT COUNTER (Days & Hours) -->
+    <!-- TOP LEFT COUNTER (Days & Hours) -->
     <div class="corner-counter" id="cornerLeft">
         <div class="time-box">
             <span class="number" id="days">0</span>
@@ -494,8 +416,8 @@
     </div>
 
 
-    <!-- 💍 MAIN CARD -->
-    <div class="clock-container" id="mainClock">
+    <!-- 💍 BOTTOM CONTAINER (Title, Subtitle, Message & Music Controls) -->
+    <div class="bottom-container" id="bottomContainer">
 
         <div class="decoration">
             ♡ ✦ ♡
@@ -509,24 +431,17 @@
             Time passed since July 17, 2026 · 5:00 PM
         </div>
 
-        <div class="divider">
-            <span></span>
-            <div class="heart">♡</div>
-            <span></span>
-        </div>
-
         <div class="message">
             Every second counts... ✨
         </div>
 
-    </div>
+        <!-- 🎵 MUSIC CONTROL BAR -->
+        <div id="musicControls">
+            <button id="prevButton" class="music-btn">⏮</button>
+            <button id="musicButton" class="music-btn">🎵 Play Music</button>
+            <button id="nextButton" class="music-btn">⏭</button>
+        </div>
 
-
-    <!-- 🎵 MUSIC CONTROL BAR -->
-    <div id="musicControls">
-        <button id="prevButton" class="music-btn">⏮</button>
-        <button id="musicButton" class="music-btn">🎵 Play Music</button>
-        <button id="nextButton" class="music-btn">⏭</button>
     </div>
 
 
@@ -544,10 +459,10 @@
 
         if (userAccess === SECRET_PASSWORD) {
 
-            /* SHOW CLOCK AND CORNER COUNTERS */
-            document.getElementById("mainClock").style.display = "block";
+            /* SHOW CORNER COUNTERS AND BOTTOM CONTAINER */
             document.getElementById("cornerLeft").style.display = "flex";
             document.getElementById("cornerRight").style.display = "flex";
+            document.getElementById("bottomContainer").style.display = "block";
 
 
             /*
